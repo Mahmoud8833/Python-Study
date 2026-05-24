@@ -28,7 +28,7 @@
 #     print(f"sum = {sum}")
 
 
-# Movie Ticket Booking Calculator (FreeCodeCamp)
+# Movie Ticket Booking Calculator (FreeCodeCamp) No.1
 
 # base_price = 15
 # age = 21
@@ -78,3 +78,27 @@
 #     print("Final price of ticket:", final_price)
 # else:
 #     print('Ticket booking failed due to restrictions')
+
+# Build a Travel Weather Planner (FreeCodeCamp) No.2
+
+distance_mi = 0
+is_raining = True
+has_bike = True
+has_car = False
+has_ride_share_app = True
+
+can_travel = False
+
+if distance_mi <= 0:
+    can_travel = False
+
+elif distance_mi <= 1:
+    can_travel = not is_raining
+
+elif distance_mi <= 6:
+    can_travel = not is_raining and has_bike
+
+else:
+    can_travel = has_car or has_ride_share_app
+
+print(can_travel)
