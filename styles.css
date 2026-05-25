@@ -1,0 +1,118 @@
+/* Base Reset */
+o*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Body Styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #222;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Header */
+.header {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 2rem;
+  color: #1e3a8a;
+}
+
+/* Main Container */
+.container {
+  width: 100%;
+  max-width: 700px;
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Button */
+.load-btn {
+  width: 100%;
+  min-height: 44px;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2563eb;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.load-btn:hover:not(:disabled) {
+  background-color: #1d4ed8;
+}
+
+.load-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Status Message */
+#statusMessage {
+  margin-top: 16px;
+  font-size: 0.95rem;
+}
+
+/* User List */
+.user-list {
+  list-style: none;
+  margin-top: 20px;
+}
+
+.user-list li {
+  padding: 14px;
+  margin-bottom: 10px;
+  background-color: #eff6ff;
+  border-radius: 8px;
+  border-left: 4px solid #2563eb;
+}
+
+/* Mobile: <= 480px */
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 1.6rem;
+  }
+
+  .container {
+    padding: 16px;
+  }
+
+  .load-btn {
+    font-size: 0.95rem;
+  }
+}
+
+/* Tablet: 481px - 1024px */
+@media (min-width: 481px) and (max-width: 1024px) {
+  .header h1 {
+    font-size: 2.2rem;
+  }
+
+  .container {
+    max-width: 80%;
+  }
+}
+
+/* Desktop: >= 1025px */
+@media (min-width: 1025px) {
+  .header h1 {
+    font-size: 2.5rem;
+  }
+
+  .container {
+    max-width: 700px;
+  }
+}

@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ديوان اللوحات المميزة - المزاد المباشر</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #1a6b3c;
+    --green-light: #e8f5ee;
+    --green-dark: #0d4525;
+    --gold: #c9a227;
+    --red: #c0392b;
+    --bg: #0d1b2a;
+    --bg2: #142233;
+    --bg3: #1c2f44;
+    --border: rgba(255,255,255,0.08);
+    --text: #f0f0f0;
+    --text2: #9ab;
+    --radius: 12px;
+  }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    direction: rtl;
+  }
+
+  /* ADMIN LOGIN */
+  #login-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+  .login-box {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+  }
+  .login-box h2 { font-size: 18px; margin-bottom: 6px; }
+  .login-box p { font-size: 13px; color: var(--text2); margin-bottom: 1.5rem; }
+  .login-box input {
+    width: 100%; padding: 10px 14px; border-radius: 8px;
+    border: 0.5px solid var(--border); background: var(--bg3);
+    color: var(--text); font-family: 'Tajawal', sans-serif;
+    font-size: 14px; margin-bottom: 10px; text-align: center;
+    letter-spacing: 4px;
+  }
+  .btn-green {
+    width: 100%; padding: 11px; border-radius: 8px;
+    background: var(--green); color: #fff;
+    border: none; font-family: 'Tajawal', sans-serif;
+    font-size: 15px; font-weight: 700; cursor: pointer;
+  }
+  .btn-green:hover { background: var(--green-dark); }
+
+  /* LAYOUT */
+  #app { display: none; }
+  .header {
+    background: var(--bg2);
+    border-bottom: 0.5px solid var(--border);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header-logo { display: flex; align-items: center; gap: 10px; }
+  .header-logo .palm { font-size: 22px; }
+  .header-logo h1 { font-size: 16px; font-weight: 700; color: var(--gold); }
+  .header-logo p { font-size: 11px; color: var(--text2); }
+  .header-nav { display: flex; gap: 8px; }
+  .tab-btn {
+    padding: 6px 16px; border-radius: 8px; font-size: 13px;
+    font-family: 'Tajawal', sans-serif; cursor: pointer;
+    border: 0.5px solid var(--border); background: transparent; color: var(--text2);
+  }
+  .tab-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
+
+  .main { display: grid; grid-template-columns: 1fr; gap: 0; }
+
+  /* ADMIN PANEL */
+  #admin-panel { display: none; padding: 20px; max-width: 680px; margin: 0 auto; width: 100%; }
+  #admin-panel.visible { display: block; }
+
+  .section-card {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-size: 13px; font-weight: 700; color: var(--gold);
+    margin-bottom: 1rem; display: flex; align-items: center; gap: 6px;
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .form-group { display: flex; flex-direction: column; gap: 4px; }
+  .form-group label { font-size: 12px; color: var(--text2); }
+  .form-group input, .form-group select {
+    padding: 8px 12px; border-radius: 8px;
+    border: 0.5px solid var(--border); background: var(--bg3);
+    color: var(--text); font-family: 'Tajawal', sans-serif; font-size: 13px;
+  }
+  .form-group input:focus { outline: none; border-color: var(--green); }
+
+  .timer-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+
+  .btn-row { display: flex; gap: 10px; margin-top: 14px; }
+  .btn-primary {
+    flex: 1; padding: 11px; border-radius: 8px; background: var(--green);
+    color: #fff; border: none; font-family: 'Tajawal', sans-serif;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+  }
+  .btn-primary:hover { background: var(--green-dark); }
+  .btn-danger {
+    flex: 1; padding: 11px; border-radius: 8px; background: var(--red);
+    color: #fff; border: none; font-family: 'Tajawal', sans-serif;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+  }
+  .btn-secondary {
+    flex: 1; padding: 11px; border-radius: 8px; background: transparent;
+    color: var(--text2); border: 0.5px solid var(--border);
+    font-family: 'Tajawal', sans-serif; font-size: 14px; cursor: pointer;
+  }
+  .btn-secondary:hover { background: var(--bg3); color: var(--text); }
+
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;
+  }
+  .status-pill.running { background: rgba(26,107,60,0.2); color: #4caf80; }
+  .status-pill.stopped { background: rgba(192,57,43,0.2); color: #e07068; }
+  .status-pill.ended { background: rgba(201,162,39,0.2); color: var(--gold); }
+
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; animation: blink 1.2s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* PUBLIC VIEW */
+  #public-view { display: none; padding: 20px; max-width: 680px; margin: 0 auto; width: 100%; }
+  #public-view.visible { display: block; }
+
+  .live-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(192,57,43,0.2); color: #e07068;
+    padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 700;
+  }
+
+  /* PLATE */
+  .plate-outer {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem; text-align: center;
+    margin-bottom: 1rem;
+  }
+  .plate {
+    background: #fff; border: 4px solid #222;
+    border-radius: 10px; display: inline-grid;
+    grid-template-columns: 1fr 64px 1fr;
+    width: 100%; max-width: 380px;
+    min-height: 90px; overflow: hidden;
+  }
+  .plate-side {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 8px 6px; gap: 2px;
+  }
+  .plate-mid {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    border-left: 2px solid #bbb; border-right: 2px solid #bbb;
+    padding: 4px;
+  }
+  .plate-country { font-size: 9px; color: #1a6b3c; font-weight: 900; }
+  .plate-ksa { font-size: 9px; color: #222; font-weight: 900; }
+  .plate-ar-letters { font-size: 24px; font-weight: 900; color: #111; letter-spacing: 3px; }
+  .plate-ar-nums { font-size: 20px; font-weight: 900; color: #111; letter-spacing: 2px; }
+  .plate-en-letters { font-size: 16px; font-weight: 900; color: #111; letter-spacing: 2px; }
+  .plate-en-nums { font-size: 14px; font-weight: 700; color: #111; letter-spacing: 1px; }
+  .plate-palm { width: 32px; height: 36px; }
+
+  /* TIMER */
+  .timer-display {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1rem;
+    text-align: center;
+  }
+  .timer-label { font-size: 12px; color: var(--text2); margin-bottom: 8px; }
+  .timer-digits {
+    font-size: 42px; font-weight: 900; font-variant-numeric: tabular-nums;
+    letter-spacing: 2px; color: var(--text);
+  }
+  .timer-digits.urgent { color: #e07068; }
+  .timer-digits.ended { color: var(--gold); }
+
+  /* PRICE */
+  .price-display {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1rem;
+  }
+  .price-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .price-label-sm { font-size: 12px; color: var(--text2); }
+  .price-big { font-size: 32px; font-weight: 900; color: #4caf80; }
+  .price-unit { font-size: 16px; font-weight: 500; color: var(--text2); margin-right: 4px; }
+  .price-flash { animation: flash 0.6s ease; }
+  @keyframes flash { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  /* ENDED OVERLAY */
+  .ended-banner {
+    background: rgba(201,162,39,0.12); border: 1px solid var(--gold);
+    border-radius: var(--radius); padding: 1.25rem; text-align: center;
+    margin-bottom: 1rem;
+  }
+  .ended-banner h3 { font-size: 18px; color: var(--gold); margin-bottom: 4px; }
+  .ended-banner p { font-size: 13px; color: var(--text2); }
+
+  /* BID HISTORY */
+  .bid-history { list-style: none; max-height: 180px; overflow-y: auto; }
+  .bid-history li {
+    display: flex; justify-content: space-between;
+    padding: 8px 0; border-bottom: 0.5px solid var(--border);
+    font-size: 13px;
+  }
+  .bid-history li:last-child { border-bottom: none; }
+  .bid-time { color: var(--text2); font-size: 11px; }
+  .bid-val { color: #4caf80; font-weight: 700; }
+
+  .no-auction {
+    text-align: center; padding: 3rem 1rem; color: var(--text2);
+  }
+  .no-auction .icon { font-size: 48px; margin-bottom: 1rem; opacity: 0.4; }
+  .no-auction p { font-size: 14px; }
+
+  /* SHARE LINK */
+  .share-box {
+    background: var(--bg3); border-radius: 8px;
+    padding: 10px 14px; display: flex; align-items: center;
+    gap: 8px; margin-top: 10px;
+  }
+  .share-box input {
+    flex: 1; background: transparent; border: none;
+    color: var(--text2); font-size: 12px; font-family: monospace;
+  }
+  .share-box input:focus { outline: none; }
+  .copy-btn {
+    padding: 5px 12px; border-radius: 6px; background: var(--green);
+    color: #fff; border: none; font-size: 12px; cursor: pointer;
+    font-family: 'Tajawal', sans-serif; white-space: nowrap;
+  }
+
+  @media (max-width: 480px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .timer-row { grid-template-columns: 1fr 1fr; }
+    .plate { max-width: 100%; }
+    .timer-digits { font-size: 32px; }
+    .price-big { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div style="font-size:36px; margin-bottom:8px;">🌴</div>
+    <h2>ديوان اللوحات المميزة</h2>
+    <p>أدخل كلمة المرور للوصول للوحة التحكم</p>
+    <input type="password" id="pwd-input" placeholder="كلمة المرور" onkeydown="if(event.key==='Enter')checkLogin()">
+    <button class="btn-green" onclick="checkLogin()">دخول</button>
+    <div style="margin-top:12px; border-top:0.5px solid var(--border); padding-top:12px;">
+      <button class="btn-secondary" style="width:100%; font-family:'Tajawal',sans-serif; font-size:13px;" onclick="guestLogin()">مشاهدة المزاد كزائر ←</button>
+    </div>
+    <p id="login-err" style="color:#e07068; font-size:12px; margin-top:8px; display:none;">كلمة المرور غلط</p>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+  <div class="header">
+    <div class="header-logo">
+      <span class="palm">🌴</span>
+      <div>
+        <h1>ديوان اللوحات المميزة</h1>
+        <p id="header-sub">لوحة التحكم</p>
+      </div>
+    </div>
+    <div class="header-nav">
+      <button class="tab-btn active" id="tab-admin" onclick="showTab('admin')">التحكم</button>
+      <button class="tab-btn" id="tab-public" onclick="showTab('public')">واجهة المزاد</button>
+      <button class="tab-btn" onclick="logout()" style="color:#e07068; border-color:rgba(192,57,43,0.3);">خروج</button>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- ADMIN PANEL -->
+    <div id="admin-panel" class="visible">
+
+      <div class="section-card">
+        <div class="section-title">🪪 بيانات اللوحة</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>الحروف — عربي</label>
+            <input type="text" id="a-ar-let" value="د ن م" maxlength="7" placeholder="مثال: أ ب ج">
+          </div>
+          <div class="form-group">
+            <label>الحروف — إنجليزي</label>
+            <input type="text" id="a-en-let" value="D N M" maxlength="7" placeholder="مثال: A B C">
+          </div>
+          <div class="form-group">
+            <label>الأرقام — عربي</label>
+            <input type="text" id="a-ar-num" value="١٢٣٤" maxlength="9" placeholder="مثال: ١٢٣٤">
+          </div>
+          <div class="form-group">
+            <label>الأرقام — إنجليزي</label>
+            <input type="text" id="a-en-num" value="1234" maxlength="4" placeholder="مثال: 1234">
+          </div>
+        </div>
+        <div style="margin-top:10px;">
+          <button class="btn-primary" onclick="applyPlate()">تحديث اللوحة</button>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-title">⏱️ إعدادات المزاد</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>السعر الابتدائي (ر.س)</label>
+            <input type="number" id="a-start-price" value="90500" min="0">
+          </div>
+          <div class="form-group">
+            <label>السعر الحالي (ر.س)</label>
+            <input type="number" id="a-cur-price" value="90500" min="0">
+          </div>
+        </div>
+        <div style="margin-top:10px;">
+          <label style="font-size:12px; color:var(--text2); display:block; margin-bottom:6px;">مدة المزاد</label>
+          <div class="timer-row">
+            <div class="form-group">
+              <label>ساعات</label>
+              <input type="number" id="t-hours" value="0" min="0" max="23">
+            </div>
+            <div class="form-group">
+              <label>دقائق</label>
+              <input type="number" id="t-mins" value="5" min="0" max="59">
+            </div>
+            <div class="form-group">
+              <label>ثواني</label>
+              <input type="number" id="t-secs" value="0" min="0" max="59">
+            </div>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-primary" id="btn-start" onclick="startAuction()">▶ بدء المزاد</button>
+          <button class="btn-danger" id="btn-stop" onclick="stopAuction()" style="display:none;">⬛ إيقاف المزاد</button>
+          <button class="btn-secondary" onclick="resetAuction()">إعادة تعيين</button>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-title">💰 تحديث السعر (أثناء المزاد)</div>
+        <div style="display:flex; gap:10px; align-items:flex-end;">
+          <div class="form-group" style="flex:1;">
+            <label>السعر الجديد (ر.س)</label>
+            <input type="number" id="a-new-price" placeholder="أدخل السعر الجديد" min="0">
+          </div>
+          <button class="btn-primary" style="flex:0 0 auto; width:auto; padding:8px 20px;" onclick="updatePrice()">تحديث</button>
+        </div>
+        <div id="price-msg" style="font-size:12px; color:#4caf80; margin-top:6px; display:none;">✓ تم تحديث السعر بنجاح</div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-title">📊 حالة المزاد</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div>
+            <div style="font-size:12px; color:var(--text2); margin-bottom:4px;">الحالة</div>
+            <span class="status-pill stopped" id="status-pill"><span class="dot"></span> متوقف</span>
+          </div>
+          <div>
+            <div style="font-size:12px; color:var(--text2); margin-bottom:4px;">الوقت المتبقي</div>
+            <div style="font-size:20px; font-weight:900;" id="admin-timer">--:--:--</div>
+          </div>
+          <div>
+            <div style="font-size:12px; color:var(--text2); margin-bottom:4px;">السعر الحالي</div>
+            <div style="font-size:20px; font-weight:900; color:#4caf80;" id="admin-price-disp">0 ر.س</div>
+          </div>
+          <div>
+            <div style="font-size:12px; color:var(--text2); margin-bottom:4px;">عدد العروض</div>
+            <div style="font-size:20px; font-weight:900;" id="admin-bids">0</div>
+          </div>
+        </div>
+        <div style="margin-top:14px;">
+          <div style="font-size:12px; color:var(--text2); margin-bottom:6px;">رابط مشاركة واجهة المزاد</div>
+          <div class="share-box">
+            <input type="text" id="share-url" readonly value="افتح التطبيق ثم انسخ الرابط">
+            <button class="copy-btn" onclick="copyUrl()">نسخ الرابط</button>
+          </div>
+          <p style="font-size:11px; color:var(--text2); margin-top:6px;">العملاء يفتحون نفس الملف ويضغطون "مشاهدة المزاد كزائر"</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PUBLIC VIEW -->
+    <div id="public-view">
+
+      <div id="no-auction-msg" class="no-auction" style="display:none;">
+        <div class="icon">🔒</div>
+        <p>لا يوجد مزاد نشط حالياً</p>
+        <p style="margin-top:6px; font-size:12px;">انتظر حتى يبدأ المزاد القادم</p>
+      </div>
+
+      <div id="auction-content">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+          <h2 style="font-size:16px; font-weight:700;">المزاد المباشر</h2>
+          <span class="live-badge" id="live-badge"><span class="dot"></span> مباشر</span>
+        </div>
+
+        <div class="plate-outer">
+          <div class="plate">
+            <div class="plate-side">
+              <div class="plate-country">المملكة العربية السعودية</div>
+              <div class="plate-ar-letters" id="p-ar-let">د ن م</div>
+              <div class="plate-ar-nums" id="p-ar-num">١٢٣٤</div>
+            </div>
+            <div class="plate-mid">
+              <div class="plate-country" style="color:#1a6b3c;">KSA</div>
+              <svg class="plate-palm" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="18" y="22" width="4" height="26" fill="#1a6b3c"/>
+                <ellipse cx="20" cy="14" rx="7" ry="13" fill="#1a6b3c" transform="rotate(-15 20 14)"/>
+                <ellipse cx="20" cy="14" rx="7" ry="13" fill="#1a6b3c" transform="rotate(15 20 14)"/>
+                <ellipse cx="20" cy="10" rx="5" ry="11" fill="#1a6b3c"/>
+                <ellipse cx="12" cy="18" rx="6" ry="9" fill="#1a6b3c" transform="rotate(-30 12 18)"/>
+                <ellipse cx="28" cy="18" rx="6" ry="9" fill="#1a6b3c" transform="rotate(30 28 18)"/>
+              </svg>
+            </div>
+            <div class="plate-side" style="direction:ltr;">
+              <div class="plate-ksa">KSA</div>
+              <div class="plate-en-letters" id="p-en-let">D N M</div>
+              <div class="plate-en-nums" id="p-en-num">1234</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timer-display">
+          <div class="timer-label" id="timer-label">الوقت المتبقي للمزاد</div>
+          <div class="timer-digits" id="pub-timer">00:05:00</div>
+        </div>
+
+        <div class="price-display">
+          <div class="price-header">
+            <span class="price-label-sm">السوم الحالي</span>
+            <span id="bids-count-pub" style="font-size:12px; color:var(--text2);">0 عرض</span>
+          </div>
+          <div>
+            <span class="price-unit">ر.س</span>
+            <span class="price-big" id="pub-price">90,500</span>
+          </div>
+        </div>
+
+        <div id="ended-banner" class="ended-banner" style="display:none;">
+          <h3>🏆 انتهى المزاد</h3>
+          <p>السعر النهائي: <strong id="final-price-text" style="color:var(--gold);">---</strong></p>
+        </div>
+
+        <div class="section-card">
+          <div class="section-title">📋 سجل العروض</div>
+          <ul class="bid-history" id="bid-list">
+            <li style="color:var(--text2); font-size:13px; justify-content:center; border:none;">لا توجد عروض بعد</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const ADMIN_PASSWORD = '1234';
+
+let state = {
+  isAdmin: false,
+  auction: {
+    running: false,
+    ended: false,
+    endTime: null,
+    currentPrice: 90500,
+    startPrice: 90500,
+    bids: [],
+    plate: { arLet: 'د ن م', enLet: 'D N M', arNum: '١٢٣٤', enNum: '1234' }
+  }
+};
+
+let timerInterval = null;
+let syncInterval = null;
+
+const STORAGE_KEY = 'ksa_auction_state';
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state.auction));
+}
+
+function loadState() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    try {
+      state.auction = JSON.parse(saved);
+      if (state.auction.endTime) {
+        state.auction.endTime = new Date(state.auction.endTime);
+      }
+    } catch(e) {}
+  }
+}
+
+function checkLogin() {
+  const val = document.getElementById('pwd-input').value;
+  if (val === ADMIN_PASSWORD) {
+    state.isAdmin = true;
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    document.getElementById('header-sub').textContent = 'لوحة التحكم — أدمن';
+    showTab('admin');
+    loadState();
+    refreshAll();
+    startSync();
+  } else {
+    document.getElementById('login-err').style.display = 'block';
+  }
+}
+
+function guestLogin() {
+  state.isAdmin = false;
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('header-sub').textContent = 'واجهة المزاد';
+  document.getElementById('tab-admin').style.display = 'none';
+  showTab('public');
+  loadState();
+  refreshPublic();
+  startSync();
+}
+
+function logout() {
+  clearInterval(timerInterval);
+  clearInterval(syncInterval);
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('pwd-input').value = '';
+  document.getElementById('login-err').style.display = 'none';
+  document.getElementById('tab-admin').style.display = '';
+}
+
+function showTab(tab) {
+  document.getElementById('admin-panel').classList.toggle('visible', tab === 'admin');
+  document.getElementById('public-view').classList.toggle('visible', tab === 'public');
+  document.getElementById('tab-admin').classList.toggle('active', tab === 'admin');
+  document.getElementById('tab-public').classList.toggle('active', tab === 'public');
+  if (tab === 'public') refreshPublic();
+}
+
+function applyPlate() {
+  state.auction.plate = {
+    arLet: document.getElementById('a-ar-let').value || '---',
+    enLet: document.getElementById('a-en-let').value || '---',
+    arNum: document.getElementById('a-ar-num').value || '----',
+    enNum: document.getElementById('a-en-num').value || '----'
+  };
+  saveState();
+  refreshAll();
+}
+
+function startAuction() {
+  const h = parseInt(document.getElementById('t-hours').value) || 0;
+  const m = parseInt(document.getElementById('t-mins').value) || 0;
+  const s = parseInt(document.getElementById('t-secs').value) || 0;
+  const totalSecs = h*3600 + m*60 + s;
+  if (totalSecs <= 0) { alert('حدد وقتاً للمزاد أولاً'); return; }
+
+  const startPrice = parseFloat(document.getElementById('a-start-price').value) || 0;
+  state.auction.running = true;
+  state.auction.ended = false;
+  state.auction.endTime = new Date(Date.now() + totalSecs * 1000);
+  state.auction.startPrice = startPrice;
+  state.auction.currentPrice = startPrice;
+  state.auction.bids = [];
+
+  applyPlate();
+  saveState();
+  refreshAll();
+  startTimer();
+
+  document.getElementById('btn-start').style.display = 'none';
+  document.getElementById('btn-stop').style.display = '';
+}
+
+function stopAuction() {
+  if (!confirm('هل تريد إيقاف المزاد؟')) return;
+  state.auction.running = false;
+  state.auction.ended = true;
+  clearInterval(timerInterval);
+  saveState();
+  refreshAll();
+  document.getElementById('btn-start').style.display = '';
+  document.getElementById('btn-stop').style.display = 'none';
+}
+
+function resetAuction() {
+  if (state.auction.running && !confirm('سيتم إلغاء المزاد الحالي. متأكد؟')) return;
+  clearInterval(timerInterval);
+  state.auction = {
+    running: false, ended: false, endTime: null,
+    currentPrice: 90500, startPrice: 90500, bids: [],
+    plate: state.auction.plate
+  };
+  saveState();
+  refreshAll();
+  document.getElementById('btn-start').style.display = '';
+  document.getElementById('btn-stop').style.display = 'none';
+}
+
+function updatePrice() {
+  const newPrice = parseFloat(document.getElementById('a-new-price').value);
+  if (!newPrice || newPrice <= 0) { alert('أدخل سعراً صحيحاً'); return; }
+  if (!state.auction.running) { alert('المزاد غير نشط'); return; }
+
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString('ar-SA', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+  state.auction.bids.unshift({ price: newPrice, time: timeStr });
+  state.auction.currentPrice = newPrice;
+  document.getElementById('a-cur-price').value = newPrice;
+  document.getElementById('a-new-price').value = '';
+
+  const msg = document.getElementById('price-msg');
+  msg.style.display = 'block';
+  setTimeout(() => msg.style.display = 'none', 2500);
+
+  saveState();
+  refreshAll();
+}
+
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    if (!state.auction.running || !state.auction.endTime) return;
+    const remaining = Math.max(0, new Date(state.auction.endTime) - Date.now());
+    if (remaining <= 0) {
+      state.auction.running = false;
+      state.auction.ended = true;
+      clearInterval(timerInterval);
+      saveState();
+      refreshAll();
+      document.getElementById('btn-start').style.display = '';
+      document.getElementById('btn-stop').style.display = 'none';
+      return;
+    }
+    updateTimerDisplay(remaining);
+  }, 500);
+}
+
+function updateTimerDisplay(ms) {
+  const totalSecs = Math.floor(ms / 1000);
+  const h = Math.floor(totalSecs / 3600);
+  const m = Math.floor((totalSecs % 3600) / 60);
+  const s = totalSecs % 60;
+  const str = `${pad(h)}:${pad(m)}:${pad(s)}`;
+
+  const adminEl = document.getElementById('admin-timer');
+  const pubEl = document.getElementById('pub-timer');
+  if (adminEl) adminEl.textContent = str;
+  if (pubEl) {
+    pubEl.textContent = str;
+    pubEl.className = 'timer-digits' + (totalSecs <= 10 ? ' urgent' : '');
+  }
+}
+
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function startSync() {
+  clearInterval(syncInterval);
+  syncInterval = setInterval(() => {
+    loadState();
+    refreshPublicSilent();
+    if (state.auction.running && state.auction.endTime) {
+      const remaining = Math.max(0, new Date(state.auction.endTime) - Date.now());
+      updateTimerDisplay(remaining);
+    }
+  }, 1000);
+}
+
+function refreshAll() {
+  refreshAdmin();
+  refreshPublic();
+}
+
+function refreshAdmin() {
+  const a = state.auction;
+  document.getElementById('a-ar-let').value = a.plate.arLet;
+  document.getElementById('a-en-let').value = a.plate.enLet;
+  document.getElementById('a-ar-num').value = a.plate.arNum;
+  document.getElementById('a-en-num').value = a.plate.enNum;
+  document.getElementById('a-cur-price').value = a.currentPrice;
+  document.getElementById('a-start-price').value = a.startPrice;
+
+  const pill = document.getElementById('status-pill');
+  if (a.running) {
+    pill.className = 'status-pill running';
+    pill.innerHTML = '<span class="dot"></span> نشط';
+  } else if (a.ended) {
+    pill.className = 'status-pill ended';
+    pill.innerHTML = '<span class="dot" style="animation:none;opacity:1;"></span> انتهى';
+  } else {
+    pill.className = 'status-pill stopped';
+    pill.innerHTML = '<span class="dot" style="animation:none;opacity:1;"></span> متوقف';
+  }
+
+  document.getElementById('admin-price-disp').textContent = Math.round(a.currentPrice).toLocaleString('ar-SA') + ' ر.س';
+  document.getElementById('admin-bids').textContent = a.bids.length;
+
+  if (!a.running && !a.ended) {
+    document.getElementById('admin-timer').textContent = '--:--:--';
+  }
+}
+
+function refreshPublicSilent() {
+  const a = state.auction;
+  const priceEl = document.getElementById('pub-price');
+  if (priceEl) {
+    const newVal = Math.round(a.currentPrice).toLocaleString('ar-SA');
+    if (priceEl.textContent !== newVal) {
+      priceEl.textContent = newVal;
+      priceEl.classList.add('price-flash');
+      setTimeout(() => priceEl.classList.remove('price-flash'), 700);
+    }
+  }
+
+  const bidsEl = document.getElementById('bids-count-pub');
+  if (bidsEl) bidsEl.textContent = a.bids.length + ' عرض';
+
+  refreshBidList();
+
+  const badge = document.getElementById('live-badge');
+  if (badge) {
+    if (a.ended) {
+      badge.innerHTML = '🏆 انتهى';
+      badge.style.background = 'rgba(201,162,39,0.2)';
+      badge.style.color = 'var(--gold)';
+    } else if (!a.running) {
+      badge.innerHTML = '⬛ متوقف';
+      badge.style.background = 'rgba(100,100,100,0.2)';
+      badge.style.color = 'var(--text2)';
+    } else {
+      badge.innerHTML = '<span class="dot"></span> مباشر';
+      badge.style.background = 'rgba(192,57,43,0.2)';
+      badge.style.color = '#e07068';
+    }
+  }
+
+  const endedBanner = document.getElementById('ended-banner');
+  if (endedBanner) {
+    endedBanner.style.display = a.ended ? 'block' : 'none';
+    if (a.ended) {
+      document.getElementById('final-price-text').textContent = Math.round(a.currentPrice).toLocaleString('ar-SA') + ' ر.س';
+      const timerEl = document.getElementById('pub-timer');
+      if (timerEl) { timerEl.textContent = '00:00:00'; timerEl.className = 'timer-digits ended'; }
+      const labelEl = document.getElementById('timer-label');
+      if (labelEl) labelEl.textContent = 'انتهى المزاد';
+    }
+  }
+}
+
+function refreshPublic() {
+  const a = state.auction;
+
+  document.getElementById('p-ar-let').textContent = a.plate.arLet;
+  document.getElementById('p-ar-num').textContent = a.plate.arNum;
+  document.getElementById('p-en-let').textContent = a.plate.enLet;
+  document.getElementById('p-en-num').textContent = a.plate.enNum;
+
+  const noMsg = document.getElementById('no-auction-msg');
+  const content = document.getElementById('auction-content');
+
+  if (!a.running && !a.ended) {
+    noMsg.style.display = 'block';
+    content.style.display = 'none';
+  } else {
+    noMsg.style.display = 'none';
+    content.style.display = 'block';
+  }
+
+  refreshPublicSilent();
+
+  if (a.running && a.endTime) {
+    startTimer();
+  }
+}
+
+function refreshBidList() {
+  const list = document.getElementById('bid-list');
+  if (!list) return;
+  const bids = state.auction.bids;
+  if (bids.length === 0) {
+    list.innerHTML = '<li style="color:var(--text2); font-size:13px; justify-content:center; border:none;">لا توجد عروض بعد</li>';
+    return;
+  }
+  list.innerHTML = bids.map((b, i) => `
+    <li>
+      <span>${i === 0 ? '🏆 ' : ''}عرض ${bids.length - i}</span>
+      <span class="bid-time">${b.time}</span>
+      <span class="bid-val">${Math.round(b.price).toLocaleString('ar-SA')} ر.س</span>
+    </li>
+  `).join('');
+}
+
+function copyUrl() {
+  const url = window.location.href;
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✓ تم النسخ';
+    setTimeout(() => btn.textContent = 'نسخ الرابط', 2000);
+  });
+}
+
+document.getElementById('share-url').value = window.location.href;
+</script>
+</body>
+</html>
